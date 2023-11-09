@@ -18,6 +18,7 @@ public class App {
                 System.out.println("Пожалуйста, укажите имя текстового файла.");
                 String fileName = scanner.nextLine();
                 printUniqueChars(fileName);
+                System.out.println();
             } else {
                 flag = "n";
             }
@@ -28,19 +29,23 @@ public class App {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))){
             String line;
             Set<Character> uniqueCharacters = new LinkedHashSet<>();
-
+            Character last = null;
             while ((line = reader.readLine()) != null) {
                 String[] words = line.split("\\s+");
 
                 for (String word : words) {
                     for (char c : word.toCharArray()) {
                         uniqueCharacters.add(c);
+                        last = c;
                     }
                 }
             }
-            
+
             for (Character c : uniqueCharacters) {
-                System.out.print(c + ", ");
+                System.out.print(c);
+                if (!c.equals(last)) {
+                    System.out.print(", ");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
