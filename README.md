@@ -29,21 +29,20 @@ public class App {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))){
             String line;
             Set<Character> uniqueCharacters = new LinkedHashSet<>();
-            Character last = null;
             while ((line = reader.readLine()) != null) {
                 String[] words = line.split("\\s+");
-
                 for (String word : words) {
                     for (char c : word.toCharArray()) {
                         uniqueCharacters.add(c);
-                        last = c;
                     }
                 }
             }
+            
+            Character last = uniqueCharacters.stream().reduce((first, second) -> second).get();
 
             for (Character c : uniqueCharacters) {
                 System.out.print(c);
-                if (!c.equals(last)) {
+                if(!c.equals(last)) {
                     System.out.print(", ");
                 }
             }
